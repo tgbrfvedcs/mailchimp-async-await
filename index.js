@@ -1,5 +1,6 @@
 const MailChimp = require('./mailchimp');
 const {
+  myEmail,
   sampleTemplate,
   sampleList,
   sampleCampaign,
@@ -31,10 +32,10 @@ const getLists = async () => {
   return result.lists;
 };
 
-const addMembers = async listID => {
+const addMembers = async (listID, emails) => {
   //add members to a list
   console.log(
-    (await mailchimp.addMember(listID, sampleMembers)) ? 'Member added' : 'Fail'
+    (await mailchimp.addMember(listID, emails)) ? 'Member added' : 'Fail'
   );
 };
 
@@ -56,18 +57,25 @@ const createCampaign = async () => {
 //main
 (async () => {
   try {
+    // Create a new list if no list existed and get the list ID
     let lists = await getLists();
     if (lists.length === 0) {
       lists = await createList();
     }
 
-    //Provide a list for creatiing a campaign later
+    //Provide a list for creating a campaign
     sampleCampaign.recipients.list_id = lists[0].id;
 
-    await addMembers(lists[0].id);
+    // Add my email to the list
+    await addMembers(lists[0].id, myEmail);
+    // Add a few other valid emails
+    await addMembers(lists[0].id, sampleMembers);
+
+    // Before sending campaign, we create a template and  campaign
     await createTemplate();
     let campaignID = await createCampaign();
 
+    // Send out a campaign from Mailchimp to everyone in the list
     console.log(
       (await mailchimp.sendCampaigns(campaignID)) ? 'Campaign sended' : 'Fail'
     );

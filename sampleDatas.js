@@ -1,8 +1,12 @@
 module.exports = {
+  myEmail: {
+    members: [{ email_address: 'tgbrfvedcs1@gmail.com', status: 'subscribed' }]
+  },
   sampleMembers: {
     members: [
       { email_address: 'tgbrfvedcs01@gmail.com', status: 'subscribed' },
-      { email_address: 'tgbrfvedcs1@gmail.com', status: 'subscribed' }
+      { email_address: 'tgbrfvedcs02@gmail.com', status: 'subscribed' },
+      { email_address: 'tgbrfvedcs03@gmail.com', status: 'subscribed' }
     ]
   },
   sampleList: {
