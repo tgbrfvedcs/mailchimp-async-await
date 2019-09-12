@@ -7,7 +7,7 @@ module.exports = class MailService {
   //Settings for making https request
   getOptions = (path, method, dataLength) => {
     return {
-      hostname: 'us4.api.mailchimp.com',
+      hostname: this.apiKey.slice(-3) + '.api.mailchimp.com',
       port: 443,
       auth: 'user:' + this.apiKey,
       path: '/3.0/' + path,
